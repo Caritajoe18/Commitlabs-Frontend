@@ -16,7 +16,7 @@ body {
 }
 
 body {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #0a0a0a;
   min-height: 100vh;
 }
 
@@ -27,7 +27,7 @@ a {
 
 /* Accessibility */
 *:focus {
-  outline: 2px solid #fff;
+  outline: 2px solid #00d4aa;
   outline-offset: 2px;
 }
 
@@ -35,7 +35,7 @@ button:focus,
 input:focus,
 select:focus,
 textarea:focus {
-  outline: 2px solid #fff;
+  outline: 2px solid #00d4aa;
   outline-offset: 2px;
 }
 
