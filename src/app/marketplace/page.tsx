@@ -1,6 +1,7 @@
 'use client'
 
-import Link from 'next/link'
+import { useMemo, useState } from 'react'
+import { MarketplaceHeader } from '@/components/MarketplaceHeader/MarketplaceHeader'
 import { MarketplaceGrid } from '@/components/MarketplaceGrid'
 import styles from './page.module.css'
 
@@ -43,22 +44,42 @@ const mockListings = [
   },
 ]
 
-export default function Marketplace() {
-  return (
-    <main id="main-content" className={styles.container}>
-      <header className={styles.header}>
-        <Link href="/" className={styles.backLink} aria-label="Back to Home">
-          ← Back to Home
-        </Link>
-        <h1>Commitment Marketplace</h1>
-        <p>Browse and trade Commitment NFTs</p>
-      </header>
+function filterBySearch(
+  items: typeof mockListings,
+  query: string
+): typeof mockListings {
+  if (!query.trim()) return items
+  const q = query.trim().toLowerCase()
+  return items.filter((item) => {
+    const searchable = [
+      item.type,
+      item.amount,
+      item.duration,
+      item.yield,
+      item.price,
+      item.owner,
+    ].join(' ')
+    return searchable.toLowerCase().includes(q)
+  })
+}
 
-      <section className={styles.gridShell} aria-label="Marketplace listings">
-        <MarketplaceGrid items={mockListings} />
-      </section>
+export default function Marketplace() {
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const filteredListings = useMemo(
+    () => filterBySearch(mockListings, searchQuery),
+    [searchQuery]
+  )
+
+  return (
+    <main id="main-content" className={styles.main}>
+      <MarketplaceHeader onSearchChange={setSearchQuery} />
+
+      <div className={styles.container}>
+        <section className={styles.gridShell} aria-label="Marketplace listings">
+          <MarketplaceGrid items={filteredListings} />
+        </section>
+      </div>
     </main>
   )
 }
-
-
