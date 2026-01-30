@@ -127,9 +127,13 @@ export default function MyCommitments() {
               </div>
 
               <div className={styles.cardActions}>
-                <button className={styles.actionButton} aria-label={`View details for ${commitment.type} commitment`}>
+                <Link
+                  href={`/commitments/${commitment.id}`}
+                  className={styles.actionButton}
+                  aria-label={`View details for ${commitment.type} commitment`}
+                >
                   View Details
-                </button>
+                </Link>
                 <button className={styles.actionButton} aria-label={`View attestations for ${commitment.type} commitment`}>
                   View Attestations
                 </button>
