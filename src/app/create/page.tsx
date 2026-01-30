@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import styles from './page.module.css'
 import CreateCommitmentStepSelectType from '@/components/CreateCommitmentStepSelectType'
@@ -163,24 +164,70 @@ export default function CreateCommitment() {
   if (currentStep === 2) {
     return (
       <>
-        <CreateCommitmentStepConfigure
-          amount={amount}
-          asset={asset}
-          availableBalance={availableBalance}
-          durationDays={durationDays}
-          maxLossPercent={maxLossPercent}
-          earlyExitPenalty={earlyExitPenalty}
-          estimatedFees={estimatedFees}
-          isValid={isStep2Valid}
-          onChangeAmount={setAmount}
-          onChangeAsset={setAsset}
-          onChangeDuration={setDurationDays}
-          onChangeMaxLoss={setMaxLossPercent}
-          onBack={handleBack}
-          onNext={handleNext}
-          amountError={amountError}
-          maxLossWarning={maxLossWarning}
-        />
+        <main id="main-content" className={styles.container}>
+          {/* Header */}
+          <header className={styles.header}>
+            <Link href="/" className={styles.backLink} aria-label="Back to Home">
+              ← Back
+            </Link>
+            <h1 className={styles.pageTitle}>Create Commitment</h1>
+            <p className={styles.pageSubtitle}>
+              Define your liquidity commitment with explicit rules and guarantees
+            </p>
+          </header>
+
+          {/* Stepper */}
+          <nav className={styles.stepper} aria-label="Progress">
+            <div className={styles.stepperTrack}>
+              {/* Step 1 */}
+              <div className={`${styles.step} ${styles.completed}`}>
+                <div className={styles.stepCircle}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </div>
+                <span className={styles.stepLabel}>Select Type</span>
+              </div>
+
+              {/* Connector */}
+              <div className={`${styles.stepConnector} ${currentStep > 1 ? styles.completedConnector : ''}`} />
+
+              {/* Step 2 */}
+              <div className={`${styles.step} ${styles.active}`}>
+                <div className={styles.stepCircle}>2</div>
+                <span className={styles.stepLabel}>Configure</span>
+              </div>
+
+              {/* Connector */}
+              <div className={`${styles.stepConnector}`} />
+
+              {/* Step 3 */}
+              <div className={`${styles.step}`}>
+                <div className={styles.stepCircle}>3</div>
+                <span className={styles.stepLabel}>Review</span>
+              </div>
+            </div>
+          </nav>
+
+          <CreateCommitmentStepConfigure
+            amount={amount}
+            asset={asset}
+            availableBalance={availableBalance}
+            durationDays={durationDays}
+            maxLossPercent={maxLossPercent}
+            earlyExitPenalty={earlyExitPenalty}
+            estimatedFees={estimatedFees}
+            isValid={isStep2Valid}
+            onChangeAmount={setAmount}
+            onChangeAsset={setAsset}
+            onChangeDuration={setDurationDays}
+            onChangeMaxLoss={setMaxLossPercent}
+            onBack={handleBack}
+            onNext={handleNext}
+            amountError={amountError}
+            maxLossWarning={maxLossWarning}
+          />
+        </main>
 
         <CommitmentCreatedModal
           isOpen={showSuccessModal}
